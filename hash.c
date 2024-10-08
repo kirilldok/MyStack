@@ -8,7 +8,7 @@ hash_t hash(const void* data, size_t size)
     {
         hash = hash*33^(*((char*)data + i));
     }
-    //fprintf(stderr, "hash = ");
-    //fprintf(stderr, "%zu\n", hash);
+    // fprintf(stderr, "hashss = ");
+    // fprintf(stderr, "%zu\n", hash);
     return hash;
 }

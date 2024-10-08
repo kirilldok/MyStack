@@ -30,10 +30,18 @@ const Canary_t RightDataCanaryREF = 13100;
 
 void StackAssert(Stack_t* stk, const char* stkName, const char* file, const char* func, int line);
 int StackError(Stack_t* stk);
-int VoidIntDump(Stack_t* stk);
+// int VoidIntDump(Stack_t* stk);
+int StackDump_t(Stack_t* stk, const char* stkName, const char* file, const char* func, int line);
+
+
+
+#ifndef STACK_DUMP_INC
+#define StackDump(stk) StackDump_t((stk), #stk, __FILE__, __func__, __LINE__)
+#endif
+
 
 #ifndef NDEBUG
-#define $ fprintf(stderr, "%s:%d\n", __FILE__, __LINE__) // BIG MONEY
+#define $ fprintf(stderr, "%s:%d\n", __FILE__, __LINE__)
 #define STACK_ASSERT(Stack) StackAssert((Stack), #Stack, __FILE__, __func__, __LINE__)
 #define STACK_INIT(Stack, inCap) strcat(*Stack.stkName, #Stack); StackInit((Stack), inCap)
 #else

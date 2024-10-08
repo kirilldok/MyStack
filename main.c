@@ -7,36 +7,46 @@
 
 
 
-const StackElem_t Poison = -18286663.16668281;
-const Canary_t LsCanary = 12000, RsCanary = 12100, LdCanary = 13000, RdCanary = 13100;
-
-
-
-
 int main()
 {
+    #ifndef NDEBUG
+    FILE* clean = fopen("log.txt", "w+b");
+    fclose(clean);
+    #endif
+
     Stack_t stk = { 0 };
+    StackCtor(&stk, 8);
 
-    StackCtor(&stk, 32);
+    // StackDump(&stk);
+    // printf("Dump 1 opened\n");
+    // StackDump(&stk);
+    // printf("Dump 1.1 opened\n");
 
+
+    //printf("stackelement[%lld](LDC) = %lg\n", stk.size, stk.data[stk.size]);
     StackPush(&stk, 100);
-    printf("stackelement[%lld] = %lg\n", stk.size, stk.data[stk.size-1]);
+    //printf("stackelement[%lld] = %lg\n", stk.size, stk.data[stk.size-1]);
     StackPush(&stk, 200);
-    printf("stackelement[%lld] = %lg\n", stk.size, stk.data[stk.size-1]);
-
-    VoidIntDump(&stk);
-    printf("VoidIntDump opened\n");
+    //printf("stackelement[%lld] = %lg\n", stk.size, stk.data[stk.size-1]);
+//
+//     StackDump(&stk);
+//     printf("Dump 2 opened\n");
     StackElem_t  x = 0;
 
-    VoidIntDump(&stk);
-    printf("VoidIntDump opened\n");
-    StackPop(&stk, &x);
+    // StackDump(&stk);
+    // printf("Dump 3 opened\n");
+    // STACK_ASSERT(&stk);
 
-    VoidIntDump(&stk);
-    printf("VoidIntDump opened\n");
+    StackPop(&stk, &x);
+    printf("Stack poped\n");
+
+    StackDump(&stk);
+    printf("Dump 4 opened\n");
     printf("x = %lg, stk.size = %lld\n",x, stk.size);
 
     StackDtor(&stk);
+    return 0;
+
 
 }
 

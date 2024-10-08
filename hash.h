@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <cstdint>
+#include <stdint.h>
 
 #ifndef NDEBUG
 typedef uint64_t hash_t;

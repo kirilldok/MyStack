@@ -17,5 +17,6 @@ run: main.exe
 	main.exe
 
 clean:
-	rm *.o*.exe
+	rm *.o
+	rm *.exe
 
