@@ -65,7 +65,7 @@ typedef struct Stack_t
     size_t capacity;
 
 
-    uint16_t Error;
+    size_t Error;
 
     #ifndef NDEBUG
     int RStructCanary;

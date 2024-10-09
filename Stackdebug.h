@@ -29,7 +29,7 @@ const Canary_t RightDataCanaryREF = 13100;
 
 
 void StackAssert(Stack_t* stk, const char* stkName, const char* file, const char* func, int line);
-int StackError(Stack_t* stk);
+size_t StackError(Stack_t* stk);
 // int VoidIntDump(Stack_t* stk);
 int StackDump_t(Stack_t* stk, const char* stkName, const char* file, const char* func, int line);
 
