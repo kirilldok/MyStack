@@ -1,0 +1,6 @@
+Objects
+*.exe
+*.o
+*out
+*.save
+main
