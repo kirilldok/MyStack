@@ -28,24 +28,22 @@ const Canary_t LeftDataCanaryREF = 13000;
 const Canary_t RightDataCanaryREF = 13100;
 
 
-void StackAssert(Stack_t* stk, const char* stkName, const char* file, const char* func, int line);
+void StackAssert(Stack_t* stk, const char* file, const char* func, int line);
 size_t StackError(Stack_t* stk);
 // int VoidIntDump(Stack_t* stk);
-int StackDump_t(Stack_t* stk, const char* stkName, const char* file, const char* func, int line);
+int StackDump_t(Stack_t* stk, const char* file, const char* func, int line);
 
 
 
 #ifndef STACK_DUMP_INC
-#define StackDump(stk) StackDump_t((stk), #stk, __FILE__, __func__, __LINE__)
+#define StackDump(stk) StackDump_t((stk), __FILE__, __func__, __LINE__)
 #endif
 
 
 #ifndef NDEBUG
-#define $ fprintf(stderr, "%s:%d\n", __FILE__, __LINE__)
-#define STACK_ASSERT(Stack) StackAssert((Stack), #Stack, __FILE__, __func__, __LINE__)
-#define STACK_INIT(Stack, inCap) strcat(*Stack.stkName, #Stack); StackInit((Stack), inCap)
+#define STACK_ASSERT(Stk) StackAssert((Stk), __FILE__, __func__, __LINE__)
 #else
-#define STACK_ASSERT(Stack)
+#define STACK_ASSERT(Stk)
 #endif
 
 #endif

@@ -51,6 +51,7 @@ typedef struct Stack_t
 {
     #ifndef NDEBUG
     int LStructCanary;
+    char* data_with_canaries;
 
     hash_t HashSum;
 

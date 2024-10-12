@@ -11,7 +11,7 @@
 #include "StackFunc.h"
 #include "hash.h"
 
-void StackAssert(Stack_t* stk, const char* stkName, const char* file, const char* func, int line)
+void StackAssert(Stack_t* stk, const char* file, const char* func, int line)
 {
     //printf("Stack assert opened\n");
 
@@ -25,6 +25,10 @@ void StackAssert(Stack_t* stk, const char* stkName, const char* file, const char
 
     if((stk->Error = StackError(stk)) != 0)
     {
+       fprintf(stderr, "CALLER STACK: %p\n"
+                       "CALLER FILE    : %s\n"
+                       "CALLER FUNCTION: %s\n"
+                       "LINE = %d\n", stk, file, func, line);
         StackDump(stk);
         fprintf(stderr, "Emergency exit, stack dumped into log.txt\n");
         assert(0);
@@ -62,13 +66,13 @@ size_t StackError(Stack_t* stk)
         errFlag += STACK_UNDERFLOW;
     }
 
-    if(*(stk->data) != LeftDataCanaryREF)
+    if(*(Canary_t*)(stk->data_with_canaries) != LeftDataCanaryREF)
     {
         fprintf(stderr, "left data canary is damaged\n");
         errFlag += LEFT_DATA_CANARY_CORRUPTED;
     }
 
-    if((*(StackElem_t*)((char*)stk->data + (stk->capacity + 1)*sizeof(StackElem_t))) != RightDataCanaryREF)
+    if(((StackElem_t*)stk->data_with_canaries)[stk->capacity + 1] != RightDataCanaryREF)
     {
         fprintf(stderr, "right data canary is damaged\n");
         errFlag += RIGHT_DATA_CANARY_CORRUPTED;
@@ -86,7 +90,7 @@ size_t StackError(Stack_t* stk)
         errFlag += RIGHT_STACK_CANARY_CORRUPTED;
     }
 
-    if(stk->HashSum != hash(stk->data, stk->capacity + 2))
+    if(stk->HashSum != hash(stk->data, stk->capacity))
     {
 
         fprintf(stderr, "data is damaged\n");
@@ -101,7 +105,7 @@ size_t StackError(Stack_t* stk)
 
 
 
-int StackDump_t(Stack_t* stk, const char* stkName, const char* file, const char* func, int line)
+int StackDump_t(Stack_t* stk, const char* file, const char* func, int line)
 {
     //printf("Dump raw opened\n");
 
@@ -129,21 +133,21 @@ int StackDump_t(Stack_t* stk, const char* stkName, const char* file, const char*
 
     fprintf(log, "## DATA BUFFER: \n");
 
-    fprintf(log, "### LEFT CANARY: %d\n", *(stk->data));
+    fprintf(log, "### LEFT CANARY: %d\n", *(Canary_t*)(stk->data_with_canaries));
 
 
 
-    for(size_t i = 1; i < stk->capacity + 1; i++)
+    for(size_t i = 0; i < stk->capacity; i++)
     {
 
-        fprintf(log, "# [%d]  (%zu)\n", *(StackElem_t*)((char*)stk->data + i * sizeof(StackElem_t)), i);
+        fprintf(log, "# [%d]  (%zu)\n", stk->data[i], i);
 
     }
 
 
 
 
-    fprintf(log, "### RIGHT CANARY: %d\n", *(StackElem_t*)((char*)stk->data + (stk->capacity ) * sizeof(StackElem_t) + sizeof(Canary_t)));
+    fprintf(log, "### RIGHT CANARY: %d\n", ((StackElem_t*)stk->data_with_canaries)[stk->capacity + 1]);
 
 
     fprintf(log, "## HASH SUM: %zu\n", stk->HashSum);
@@ -152,7 +156,7 @@ int StackDump_t(Stack_t* stk, const char* stkName, const char* file, const char*
 
 
     uint16_t byte = 2;
-    for(size_t i = 0; i < sizeof(uint16_t)*8; i++)
+    for(size_t i = 0; i < sizeof(uint16_t) * 8; i++)
     {
         fprintf(log, "%d", (byte & stk->Error) ? 1 : 0);
         byte *= 2;
@@ -170,7 +174,7 @@ int StackDump_t(Stack_t* stk, const char* stkName, const char* file, const char*
 
 
 
-//  
+//
 // int VoidIntDump(Stack_t* stk)
 // {
 // //     printf("VoidIntDump opened\n");
