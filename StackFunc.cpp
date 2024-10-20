@@ -58,7 +58,7 @@ int StackCtor(Stack_t* stk, size_t stacklen)
 int StackResize(Stack_t* stk, const bool Decrease)
 {
     STACK_ASSERT(stk);
-    char* data_with_canaries = {0};
+    char* data_with_canaries;
 
     if (Decrease)
     {

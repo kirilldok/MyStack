@@ -1,5 +1,5 @@
 ########################## STACK INFO ##########################
-## CALLER STACK: 0x767882109050
+## CALLER STACK: 0x7940ec309050
 ## CALLER FILE    : StackFunc.cpp
 ## CALLER FUNCTION: StackCtor
 ## LINE          = 53
@@ -49,7 +49,7 @@
 
 
 ########################## STACK INFO ##########################
-## CALLER STACK: 0x767882109050
+## CALLER STACK: 0x7940ec309050
 ## CALLER FILE    : main.cpp
 ## CALLER FUNCTION: main
 ## LINE          = 21
@@ -99,7 +99,7 @@
 
 
 ########################## STACK INFO ##########################
-## CALLER STACK: 0x767882109050
+## CALLER STACK: 0x7940ec309050
 ## CALLER FILE    : main.cpp
 ## CALLER FUNCTION: main
 ## LINE          = 24
@@ -149,7 +149,7 @@
 
 
 ########################## STACK INFO ##########################
-## CALLER STACK: 0x767882109050
+## CALLER STACK: 0x7940ec309050
 ## CALLER FILE    : main.cpp
 ## CALLER FUNCTION: main
 ## LINE          = 30
@@ -199,7 +199,7 @@
 
 
 ########################## STACK INFO ##########################
-## CALLER STACK: 0x767882109050
+## CALLER STACK: 0x7940ec309050
 ## CALLER FILE    : main.cpp
 ## CALLER FUNCTION: main
 ## LINE          = 34
