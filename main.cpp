@@ -16,7 +16,7 @@ int main()
 
     Stack_t stk = { 0 };
     StackCtor(&stk, 32);
-
+  
     StackPush(&stk, 100);
     StackDump(&stk);
 

@@ -19,9 +19,11 @@
 #define ON_DEBUG(code) code
 #endif
 
-typedef int Canary_t;
+typedef double Canary_t;
 
-const size_t UNLIKELY_STACKSIZE = 999999999999999; // Very unlikely to appear, used as a sign of stack underflow.
+
+
+const size_t UNLIKELY_STACKSIZE = 9e17; // Very unlikely to appear, used as a sign of stack underflow.
 const Canary_t LeftStructCanaryREF  = 12000;
 const Canary_t RightStructCanaryREF = 12100;
 const Canary_t LeftDataCanaryREF = 13000;
@@ -29,7 +31,7 @@ const Canary_t RightDataCanaryREF = 13100;
 
 
 void StackAssert(Stack_t* stk, const char* file, const char* func, int line);
-size_t StackError(Stack_t* stk);
+int StackError(Stack_t* stk);
 // int VoidIntDump(Stack_t* stk);
 int StackDump_t(Stack_t* stk, const char* file, const char* func, int line);
 

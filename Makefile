@@ -6,7 +6,7 @@ WARNINGFLAGS := -Wall -Wextra -Weffc++ -Waggressive-loop-optimizations -Wc++14-c
 
 SANITIZEFLAGS := -fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
 
-
+  
 CXX := g++
 CPPFLAGS := -D _DEBUG
 CXXFLAGS := -ggdb3 -std=c++17 -O0 -fcheck-new -fsized-deallocation -fstack-protector -fstrict-overflow -flto-odr-type-merging -fno-omit-frame-pointer  -pie -fPIE $(WARNINGFLAGS) $(SANITIZEFLAGS)
