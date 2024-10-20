@@ -22,8 +22,9 @@ int StackAssert(Stack_t* stk, const char* file, const char* func, int line)
         return STACK_PTR_IS_NULL;
     }
 
+    int err = StackError(stk);
 
-    if((stk->Error = StackError(stk)) != 0)
+    if(err != 0)
     {
        fprintf(stderr, "CALLER STACK: %p\n"
                        "CALLER FILE    : %s\n"
@@ -31,8 +32,7 @@ int StackAssert(Stack_t* stk, const char* file, const char* func, int line)
                        "LINE = %d\n", stk, file, func, line);
         StackDump(stk);
         fprintf(stderr, "Emergency exit, stack dumped into log.txt\n");
-        assert(0);
-        return stk->Error;
+        return err;
     }
     return NO_ERRORS;
 }
@@ -110,6 +110,12 @@ int StackError(Stack_t* stk)
 int _StackDump(Stack_t* stk, const char* file, const char* func, int line)
 {
     //printf("Dump raw opened\n");
+    if (stk == NULL)
+    {
+        fprintf(stderr, "Stack pointer in Dump is NULL\n");
+        return STACK_PTR_IS_NULL;
+    }
+
     const int MAX_OUTPUT_STACK = 64;
 
     FILE* log = fopen("log.txt", "a+b");
@@ -156,7 +162,7 @@ int _StackDump(Stack_t* stk, const char* file, const char* func, int line)
 
     fprintf(log, "## HASH SUM: %zu\n", stk->HashSum);
     fprintf(log, "## ERRORS: ");
-    fprintf(log, "%d\n", stk->Error);
+    fprintf(log, "%d\n", StackError(stk));
 
     fprintf(log, "\n################################################################\n\n\n\n");
     fclose(log);

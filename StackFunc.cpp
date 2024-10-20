@@ -7,7 +7,8 @@
 
 static const StackElem_t Poison = -666.6;
 static const int ReallocCoef = 2;
-
+static const bool Decrease = 1;
+static const bool Increase = 0;
 
 
 int StackCtor(Stack_t* stk, size_t stacklen)
@@ -55,12 +56,12 @@ int StackCtor(Stack_t* stk, size_t stacklen)
 }
 
 
-int StackResize(Stack_t* stk, const bool Decrease)
+int StackResize(Stack_t* stk, const bool resize_flag)
 {
     STACK_ASSERT(stk);
     char* data_with_canaries;
 
-    if (Decrease)
+    if (resize_flag == Decrease)
     {
         STACK_ASSERT(stk);
 
@@ -116,7 +117,12 @@ int StackPush(Stack_t* stk, StackElem_t element)
 
     if (stk->size  >=  stk->capacity)
     {
-        StackResize(stk, true);
+        if (StackResize(stk, Decrease) != 0)
+        {
+            stk->Error += ALLOC_ERROR;
+            free(stk->data);
+            return ALLOC_ERROR;
+        }
     }
 
     stk->data[stk->size] = element;
@@ -134,18 +140,18 @@ int StackPush(Stack_t* stk, StackElem_t element)
 int StackPop(Stack_t* stk, StackElem_t* Pop_element)
 {
     #ifndef NDEBUG
-    if(Pop_element == NULL)
-    {
-        printf("Pop element is NULL. Elemment of stack must be StakElem_t type!\n");
-        return INPUT_ERROR;
-    }
+        if(Pop_element == NULL)
+        {
+            printf("Pop element is NULL. Elemment of stack must be StakElem_t type!\n");
+            return INPUT_ERROR;
+        }
     #endif
 
     STACK_ASSERT(stk);
 
     if (stk->size <= (stk->capacity / 4))
     {
-        if (StackResize(stk, false) != 0)
+        if (StackResize(stk, Increase) != 0)
         {
             stk->Error += ALLOC_ERROR;
             free(stk->data);
@@ -153,11 +159,8 @@ int StackPop(Stack_t* stk, StackElem_t* Pop_element)
         }
     }
 
-
     stk->size = stk->size - 1;
     *Pop_element = stk->data[stk->size];
-
-
 
     #ifndef NDEBUG
         stk->data[stk->size] = Poison;
@@ -173,16 +176,11 @@ int StackPop(Stack_t* stk, StackElem_t* Pop_element)
 
 int StackDtor(Stack_t* stk)
 {
-
     STACK_ASSERT(stk);
 
-    for(size_t i = 0; i < stk->size; i++)
-    {
-        stk->data[i] = Poison;
-
-    }
-
     #ifndef NDEBUG
+        for(size_t i = 0; i < stk->size; i++)
+            stk->data[i] = Poison;
         stk->size = 0;
         stk->capacity = 0;
         stk->LStructCanary = 0;
