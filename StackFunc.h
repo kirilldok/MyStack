@@ -78,7 +78,7 @@ int StackCtor(Stack_t* stk, size_t stacklen);
 
 int StackPush(Stack_t* stk, StackElem_t element);
 int StackPop(Stack_t* stk, StackElem_t* POPelement);
-int StackResize(Stack_t* stk, bool resizeflag);
+int StackResize(Stack_t* stk, size_t new_capacity);
 
 int StackDtor(Stack_t* stk);
 
