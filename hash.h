@@ -3,8 +3,8 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include <stdint.h>  
-
+#include <stdint.h>
+  
 #ifndef NDEBUG
 typedef uint64_t hash_t;
 #endif
