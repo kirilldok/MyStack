@@ -81,6 +81,7 @@ int StackPop(Stack_t* stk, StackElem_t* POPelement);
 int StackResize(Stack_t* stk, size_t new_capacity);
 
 int StackDtor(Stack_t* stk);
+int Stack_Dump(Stack_t* stk);
 
 
 #endif

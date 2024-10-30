@@ -174,3 +174,11 @@ int StackDtor(Stack_t* stk)
 
     return NO_ERRORS;
 }
+
+
+int Stack_Dump(Stack_t* stk)
+{
+    StackDump(stk);
+
+    return NO_ERRORS;
+}
