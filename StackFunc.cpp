@@ -41,7 +41,7 @@ int StackCtor(Stack_t* stk, size_t stacklen)
         stk->RStructCanary = RightStructCanaryREF;
         stk->LStructCanary = LeftStructCanaryREF;
         *(Canary_t*)(data_with_canaries) = LeftDataCanaryREF;
-        *(Canary_t*)(stk->data + stk->capacity ) = RightDataCanaryREF;
+        *(Canary_t*)(stk->data + stk->capacity) = RightDataCanaryREF;
         for (size_t i = 0; i < stk->capacity; i++)
         {
             stk->data[i] = Poison;
@@ -174,7 +174,6 @@ int StackDtor(Stack_t* stk)
 
     return NO_ERRORS;
 }
-
 
 int Stack_Dump(Stack_t* stk)
 {
