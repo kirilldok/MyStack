@@ -10,7 +10,6 @@
 #include "Stackdebug.h"
 
 
-
 int StackAssert(Stack_t* stk, const char* file, const char* func, int line)
 {
     //printf("Stack assert opened\n");
